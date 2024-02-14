@@ -6,18 +6,20 @@ const Service = new Schema({
         required : true
     },
     category : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'category'
+        // type : mongoose.Schema.Types.ObjectId,
+        // ref : 'category'
+        type : String ,
+        required : true
     },
     price : {
         type : Number ,
         required : true
     },
-    Duration : {
+    duration : {
         type : Number , 
         required : true
     },
-    Gender : {
+    gender : {
         type : String , 
         reuired : true
     }
@@ -28,3 +30,5 @@ const Service = new Schema({
 
 }
 )
+
+export default mongoose.model('service',Service)

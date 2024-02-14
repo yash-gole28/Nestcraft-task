@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { addCategory, deleteCategory, getCategories } from "../Controllers/service.controller.js";
+import { addService, deleteService, getServices, updateService } from "../Controllers/service.controller.js";
 
 const router = Router()
 
-router.post('/add-category',addCategory)
-router.get('/get-categories',getCategories)
-router.post('/delete-category',deleteCategory)
-
+router.post("/add-service",addService)
+router.get("/get-services",getServices)
+router.delete("/delete-service",deleteService)
+router.post("/update",updateService)
 
 
 export default router

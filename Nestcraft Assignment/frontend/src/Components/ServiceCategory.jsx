@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 import GreenButton from './GreenButton'
 import axios from 'axios'
 import AddCategory from './AddCategory'
+import { Link } from 'react-router-dom'
 
 
 const ServiceCategory = () => {
-  const [listData, setListData] = useState([{ name: "lsdfkfjsd" }])
+  const [listData, setListData] = useState([])
   const [deleteItem, setDeleteItem] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [popUp , setPopUp] = useState(false)
+  const [popUp, setPopUp] = useState(false)
 
   async function getCategories() {
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/service/get-categories')
+      const response = await axios.get('http://localhost:8000/api/v1/category/get-categories')
       if (response.data.success) {
         // console.log(response.data.data)
         setListData(response.data.data)
@@ -33,7 +34,7 @@ const ServiceCategory = () => {
 
   const deleteChecked = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/service/delete-category', {
+      const response = await axios.post('http://localhost:8000/api/v1/category/delete-category', {
         deleteItem
       });
       if (response.data.success) {
@@ -54,8 +55,8 @@ const ServiceCategory = () => {
   );
 
 
-  const handelPop = ()=>{
-    setPopUp((pop)=>!pop)
+  const handelPop = () => {
+    setPopUp((pop) => !pop)
     getCategories()
   }
 
@@ -67,12 +68,12 @@ const ServiceCategory = () => {
   return (
     <div className='screen'>
       <div className={popClass}>
-      <AddCategory/>
+        <AddCategory />
       </div>
       <div className='nav'>
-        <div className='col-blue f-weight'>Views Service Category</div>
+      <Link style={{textDecoration:"none"}} to="/services"> <div className='col-btn f-weight'>View Service</div></Link>
         <div onClick={handelPop}>
-        <GreenButton  title="Add Service category +" />
+          <GreenButton title="Add Service category +" />
         </div>
       </div>
       <div>
@@ -82,7 +83,7 @@ const ServiceCategory = () => {
           <button className='delete-btn' onClick={deleteChecked}>Delete</button>
         </div>
       </div>
-      
+
       <div className='list-container'>
         {filteredList.map((list, index) => (
           <div className='list-content' key={index}>
@@ -91,7 +92,7 @@ const ServiceCategory = () => {
               checked={deleteItem.includes(list._id)}
               onChange={() => handleCheck(list._id)}
             />
-            <div className='img-cont'style={{backgroundColor:list.appointmentColor , width:"35px", height:"35px",borderRadius:"50%", marginLeft:"10px"}}></div>
+            <div className='img-cont' style={{ backgroundColor: list.appointmentColor, width: "35px", height: "35px", borderRadius: "50%", marginLeft: "10px" }}></div>
             <div className='description-container'>
               <h4>{list.categoryName}</h4>
               <p>{list.description}</p>
@@ -99,6 +100,7 @@ const ServiceCategory = () => {
           </div>
         ))}
       </div>
+      <Link to={'/services'}> <button>service</button> </Link>
     </div>
   )
 }
@@ -106,7 +108,7 @@ const ServiceCategory = () => {
 export default ServiceCategory
 
 
-  {/* <div className='list-container'>
+{/* <div className='list-container'>
         {listData.map((list, index) => (
           <div className='list-content' key={index}>
             <input

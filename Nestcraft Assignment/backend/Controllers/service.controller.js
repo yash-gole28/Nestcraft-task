@@ -1,43 +1,55 @@
-import categoryModal from "./../Modals/category.modal.js"
+import serviceModal from "../Modals/service.modal.js"
 
-
-
-export const addCategory = async (req , res)=>{
+export const addService = async(req , res) => {
     try{
-        const {categoryName , description ,appointmentColor} = req.body.data
-        console.log(req.body)
-        if(!categoryName || !description)return res.status(404).json({success:false , message :"not found"})
-        const category = await new categoryModal({
-            categoryName , description ,appointmentColor
-    })
-    await category.save()
-        console.log(req.body)
-        res.status(200).json({success: true , message :"added successfully"})
+        const {services, category, price, duration, gender} = req.body.addService
+        if(!services || !category || !price || !duration || !gender) return res.status(404).json({success:false , message:"incomplete data"})
+            const addData =await new serviceModal({
+            services, category, price, duration, gender
+        })
+        await addData.save()
+
+        return res.status(200).json({success:true , message:"service added"})
     }catch(error){
         console.log(error)
         return res.status(500).json({success : false , message: "error"})
     }
 }
 
-export const getCategories = async (req , res)=>{
+
+export const getServices = async(req , res) => {
     try{
-        const data = await categoryModal.find({})
-    if(!data)return res.status(404).json({success:false , message : "something went wrong"})
-    if(data)return res.status(200).json({success:true , message : "here's your data",data})
+        const data = await serviceModal.find({})
+        if(!data)return res.status(404).json({success:false , message:"not found"})
+
+        return res.status(200).json({success:true , message : "your services data" , data})
     }catch(error){
         console.log(error)
         return res.status(500).json({success : false , message: "error"})
     }
 }
 
-export const deleteCategory = async (req , res) =>{
+export const deleteService = async (req, res) => {
     try{
-        const { deleteItem} =req.body
-        console.log(deleteItem)
-        for(let i = 0 ;i<deleteItem.length ; i++){
-            await categoryModal.findByIdAndDelete(deleteItem[i])
-        }
-        return res.status(200).json({success:true , message : 'deleted'})
+        const { id } = req.query
+        await serviceModal.findByIdAndDelete(id)
+        return res.status(200).json({success: true , message:"deleted"})
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({success : false , message: "error"})
+    }
+}
+
+export const updateService = async (req , res) => {
+    try{
+        const {id , serviceData} = req.body
+
+        const update = serviceData.find(item => item._id === id);
+
+        await serviceModal.findByIdAndUpdate(id , {services:update.services,category:update.category,price:update.price,duration:update.duration,gender:update.gender})
+
+        return res.status(200).json({success:true , message:"updated"})
+
     }catch(error){
         console.log(error)
         return res.status(500).json({success : false , message: "error"})

@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+
 
 
 const AddCategory = () => {
@@ -16,7 +18,7 @@ const AddCategory = () => {
     const handleSubmit = async(event) => {
         event.preventDefault()
         try{
-            const response = await axios.post("http://localhost:8000/api/v1/service/add-category",{data})
+            const response = await axios.post("http://localhost:8000/api/v1/category/add-category",{data})
             if(response.data.success){
                 alert("added")
                 setData({categoryName:"" , description:"" ,appointmentColor:""})
@@ -27,7 +29,7 @@ const AddCategory = () => {
     }
 
   return (
-    <div className='popup'>
+    <div >
         <div className='pop-top'>
             <h3>Add New Service Category</h3>
             <span> x </span>
@@ -50,6 +52,7 @@ const AddCategory = () => {
 
         <button className='save-btn' type="submit">Save</button>
       </form>
+
     </div>
   )
 }
