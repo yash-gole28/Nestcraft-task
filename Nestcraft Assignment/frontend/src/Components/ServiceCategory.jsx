@@ -15,7 +15,6 @@ const ServiceCategory = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/v1/category/get-categories')
       if (response.data.success) {
-        // console.log(response.data.data)
         setListData(response.data.data)
 
       }
@@ -34,9 +33,8 @@ const ServiceCategory = () => {
 
   const deleteChecked = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/category/delete-category', {
-        deleteItem
-      });
+      console.log(deleteItem)
+      const response = await axios.post('http://localhost:8000/api/v1/category/delete-category', {deleteItem});
       if (response.data.success) {
         console.log('Items deleted successfully');
         setDeleteItem([]);
@@ -68,7 +66,7 @@ const ServiceCategory = () => {
   return (
     <div className='screen'>
       <div className={popClass}>
-        <AddCategory />
+        <AddCategory/>
       </div>
       <div className='nav'>
       <Link style={{textDecoration:"none"}} to="/services"> <div className='col-btn f-weight'>View Service</div></Link>
@@ -95,12 +93,12 @@ const ServiceCategory = () => {
             <div className='img-cont' style={{ backgroundColor: list.appointmentColor, width: "35px", height: "35px", borderRadius: "50%", marginLeft: "10px" }}></div>
             <div className='description-container'>
               <h4>{list.categoryName}</h4>
-              <p>{list.description}</p>
+              <p className='description'>{list.description}</p>
             </div>
           </div>
         ))}
       </div>
-      <Link to={'/services'}> <button>service</button> </Link>
+    
     </div>
   )
 }
@@ -108,19 +106,3 @@ const ServiceCategory = () => {
 export default ServiceCategory
 
 
-{/* <div className='list-container'>
-        {listData.map((list, index) => (
-          <div className='list-content' key={index}>
-            <input
-              type="checkbox"
-              checked={deleteItem.includes(list._id)} // Check if the item's _id is included in deleteItem array
-              onChange={() => handleCheck(list._id)} // Pass the item's _id to handleCheck function
-            />
-            <div className='img-container'></div>
-            <div className='description-container'>
-              <h4>{list.categoryName}</h4>
-              <p>{list.description}</p>
-            </div>
-          </div>
-        ))}
-      </div> */}

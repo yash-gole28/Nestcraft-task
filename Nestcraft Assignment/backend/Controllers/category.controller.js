@@ -1,6 +1,19 @@
 import categoryModal from "./../Modals/category.modal.js"
+import multer from 'multer'
+import path from 'path'
 
+const storage = multer.diskStorage({
+    destination: (req, res , cb) => {
+        cb(null ,"Public/images" )
+    },
+    filename: (req , res , cb) => {
+        cb(null , file.fieldname + "_" + Date.now() + path.extname(file.originalname))
+    }
+})
 
+const upload = multer({
+    storage : storage
+})
 
 export const addCategory = async (req , res)=>{
     try{
@@ -32,7 +45,7 @@ export const getCategories = async (req , res)=>{
 
 export const deleteCategory = async (req , res) =>{
     try{
-        const { deleteItem} =req.body
+        const {deleteItem} =req.body
         console.log(deleteItem)
         for(let i = 0 ;i<deleteItem.length ; i++){
             await categoryModal.findByIdAndDelete(deleteItem[i])

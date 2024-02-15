@@ -5,7 +5,7 @@ const router = Router()
 
 router.post('/add-category',addCategory)
 router.get('/get-categories',getCategories)
-router.delete('/delete-category',deleteCategory)
+router.post('/delete-category',deleteCategory)
 
 
 

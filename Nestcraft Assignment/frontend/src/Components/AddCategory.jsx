@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 
 
@@ -12,7 +11,7 @@ const AddCategory = () => {
     const handleChange = (event) =>{
         
         setData({...data ,[event.target.name]:event.target.value})
-        // console.log(data)
+      
     
     }
     const handleSubmit = async(event) => {
@@ -29,7 +28,7 @@ const AddCategory = () => {
     }
 
   return (
-    <div >
+    <div>
         <div className='pop-top'>
             <h3>Add New Service Category</h3>
             <span> x </span>
@@ -47,7 +46,7 @@ const AddCategory = () => {
         <label htmlFor="description">description</label>
         <textarea id='description'maxLength={200} value={data.description} name='description' onChange={handleChange}/>
         <div>
-            {/* <input  type="file" src="" alt="" /> */}
+           
         </div>
 
         <button className='save-btn' type="submit">Save</button>
